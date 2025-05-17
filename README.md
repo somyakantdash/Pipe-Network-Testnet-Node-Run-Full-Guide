@@ -7,16 +7,22 @@ By removing the need for costly centralized infrastructure, Pipe Network enables
 
 Pipe Network aims to create a hyper-localized, scalable CDN that leverages Solana’s high-performance blockchain to deliver content faster, more securely, and more efficiently than traditional centralized CDNs, such as Cloudflare. The project incentivizes users to host internet infrastructure by running nodes, contributing to a decentralized ecosystem. This approach is part of a broader trend in decentralized infrastructure networks (DePIN), which seek to distribute and democratize access to digital services.
 
-## Key features of Pipe Network include
-- Permissionless Participation: Anyone can contribute to the network by running nodes, known as PoP (Point of Presence) nodes, without needing special permissions. This fosters a community-driven ecosystem.
+## Key Features
+- Hyperlocal PoP Nodes: Ultra-low latency (<10ms) via nodes close to users.
+- Permissionless Participation: Anyone can run nodes, boosting scalability.
+- Solana-Based: Fast, secure, and scalable using Solana’s blockchain.
+- Distributed Caching: Local content caching for efficient delivery.
 
-- Low-Latency Content Delivery: By placing nodes close to end users, Pipe Network ensures fast and reliable content streaming, making it suitable for media and real-time applications.
+## Airdrop Details
+Status: Confirmed via testnet rewards (per X post), but no official date or specifics yet.
 
-- Guardian Node Program: Pipe Network has introduced a program where users can earn points by running a Guardian Node via a browser extension. These points are intended to convert into rewards after the project’s token generation event (TGE), though the specifics of the rewards and tokenomics are not fully detailed in the available information.
-
-- Funding and Backing: Pipe Network has raised $10 million in funding, with investments led by Multicoin Capital and Solana Ventures, indicating strong industry support and interest in its vision.
+Eligibility: Join testnet—install a node fill out Supply and Access Compute forms, engage on X/Discord.
+![Screenshot 2025-05-17 093818](https://github.com/user-attachments/assets/bae6e58e-b213-4344-8116-3e0d58a97537)
 
 ### Funding Source
+- Total Raised: Pipe Network raised $10M
+- Series A (2024): $10M, led by Multicoin Capital, with Solana Ventures, Robot Ventures.
+- Valuation: Undisclosed. Funds for testnet, PipeQuest, and mainnet (2025).
 
 1️⃣ Check: https://cryptorank.io/ico/pipe-network#funding-rounds
 
