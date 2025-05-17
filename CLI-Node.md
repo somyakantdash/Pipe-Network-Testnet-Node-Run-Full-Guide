@@ -97,11 +97,22 @@ screen -r pipetestnet
 1. Visit: [Download](https://download.pipe.network/) file (use invite code from email)
 2. Once Downloaded use termius SFTP feature to drag and drop the downloaded file in `/opt/popcache` you created in step 4
 
+For Local PC
+```
+sudo cp -r /mnt/c/Users/ASUS/Downloads/File /opt/popcache/
+```
+Replace "c/Users/ASUS/Downloads/File" to your Actual File Path in ur System
+
+For VPS (Run in Powershell or Command Prompt)
+```
+scp -r "C:\Users\ASUS\Downloads\nohos" root@VPS_IP:/opt/popcache/
+```
+Replace "C:\Users\ASUS\Downloads\File" to your Actual File Path in ur System and VPS_IP with ur Actual VPS IP
 ```
 sudo tar -xzf pop-v0.3.0-linux-*.tar.gz
 ```
 ```
-chmod +x /opt/popcache/pop
+sudo chmod +x /opt/popcache/pop
 ```
 
 6️⃣ Setup Config File
