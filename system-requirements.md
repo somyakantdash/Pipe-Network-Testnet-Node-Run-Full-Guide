@@ -3,9 +3,12 @@
 ## Overview
 Cache Node is a high-performance caching service that helps distribute and serve files efficiently across a network
 
-- Minimum 4GB RAM (configurable), more the better for higher rewards
-- At least 100GB free disk space (configurable). 200-500GB is a sweet spot
-- Internet connectivity available 24/7
+| Component      | Specification                      |
+|----------------|------------------------------------|
+| CPU            | 4 core Processor                   |
+| RAM            | 8 GB (4–8 GB can also run it)     |
+| Storage        | 100 GB SSD                         |
+| Internet Speed | 25 Mbps Upload / Download          |
 
 # Software Requirements for PC Users
 
@@ -16,6 +19,6 @@ Cache Node is a high-performance caching service that helps distribute and serve
 # Network Requirements
 
 - Stable internet connection required
-- Port 8003 must be accessible
+- Port 80 & 443 must be accessible
 - Supports IPv4 and IPv6
 - Auto-fallback on network errors
