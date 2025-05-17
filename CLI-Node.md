@@ -104,7 +104,7 @@ Replace "c/Users/ASUS/Downloads/File" to your Actual File Path in ur System
 
 2.B For VPS (Run in Powershell or Command Prompt)
 ```
-scp -r "C:\Users\ASUS\Downloads\nohos" root@VPS_IP:/opt/popcache/
+scp -r "C:\Users\ASUS\Downloads\File" root@VPS_IP:/opt/popcache/
 ```
 Replace "C:\Users\ASUS\Downloads\File" to your Actual File Path in ur System and VPS_IP with ur Actual VPS IP
 ```
@@ -151,6 +151,7 @@ nano config.json
   }
 }
 ```
+Then save - CTRL+X Then Enter "Y" Then Enter
 
 - `pop-location`: location of VPS --> Command to Check --> `realpath --relative-to /usr/share/zoneinfo /etc/localtime`
 - `website`: Anything you prefer (can use github profile)
@@ -203,8 +204,6 @@ sudo systemctl status popcache
 sudo journalctl -u popcache
 ```
 
-## Check Points & Status from Dashboard - https://dashboard.pipenetwork.com/node-lookup
-
 
 ## 🔶For Next Day Run This Command
 
@@ -238,9 +237,9 @@ sudo systemctl restart popcache
 
 ## Need to Free Your 8003 Port
 
-### Identify the Process Using Port 8003
+### Identify the Process Using Port 443
 ```
-sudo ss -tulpn | grep 8003
+sudo ss -tulpn | grep 443
 ```
 
 Example - ``` LISTEN  0  128  0.0.0.0:0380  0.0.0.0:*  users:(("nginx",pid=1234,fd=6)) ```
@@ -252,7 +251,7 @@ sudo kill -9 1234
 
 ### Kill All Processes Using Port 8003
 ```
-sudo fuser -k 8003/tcp
+sudo fuser -k 443/tcp
 ```
 
 Reference Video How to Free 8003 or any port - https://youtu.be/4iP4GvLfCrU?t=229
