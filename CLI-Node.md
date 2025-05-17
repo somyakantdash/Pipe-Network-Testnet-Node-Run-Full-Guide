@@ -223,6 +223,19 @@ sudo systemctl enable popcache
 sudo systemctl start popcache
 ```
 
+### Optional: Restart or Stop Node
+Stop
+```
+sudo systemctl stop popcache
+```
+
+Restart
+```
+sudo systemctl daemon-reload
+sudo systemctl enable popcache
+sudo systemctl restart popcache
+```
+
 ## Need to Free Your 8003 Port
 
 ### Identify the Process Using Port 8003
@@ -247,7 +260,6 @@ Reference Video How to Free 8003 or any port - https://youtu.be/4iP4GvLfCrU?t=22
 ## Delete Pipe node
 ```
 cd /data
-rm -f pop  # Deletes the 'pop' binary  
-rm -rf download_cache  # Deletes the 'download_cache' folder  
-rm -f node_info.json  # Deletes the 'node_info.json' file
+sudo rm -rf /opt/popcache  # Deletes the 'popcache' binary
+sudo rm -f config.json  # Deletes the 'node_info.json' file
 ```
