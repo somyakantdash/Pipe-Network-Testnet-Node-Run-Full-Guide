@@ -1,93 +1,196 @@
 # CLI Node Run Full Guide (PC and VPS for Both)
 
-### Offical Docs by Pipe Network - https://docs.pipe.network/devnet-2
+### Offical Docs by Pipe Network - https://docs.pipe.network/nodes/testnet
+
+----
+
+## 🧰 Prerequisites (Only For Devnet Node Run Users)
+	
+### Stop Old Node
+If you have running a devnet node previously, you need to do these steps first.
+
+### 1. Backup `Node Info File`
+You will need to backup old `node_info.json` file which you can find in pipe folder in your `root` directory.
+
+Save the file
+```
+nano ~/node_info.json
+```
+
+### 2. Stop old node
+```
+sudo systemctl stop pipe
+sudo systemctl disable pipe
+sudo systemctl daemon-reload
+```
+
+---
 
 1️⃣ Dependencies for WINDOWS & LINUX & VPS
 ```
-sudo apt update
-sudo apt upgrade -y
+sudo apt-get update && sudo apt-get upgrade -y
+```
+```
+sudo apt install curl iptables build-essential git wget lz4 jq make gcc nano automake autoconf tmux htop nvme-cli libgbm1 pkg-config libssl-dev libleveldb-dev tar clang bsdmainutils ncdu unzip libleveldb-dev  -y
+```
+```
+sudo apt install -y libssl-dev ca-certificates
+```
+
+2️⃣ Enable Firewall & Open Ports
+```
+sudo ufw allow ssh
+sudo ufw enable
+
+sudo ufw allow 80/tcp
+sudo ufw allow 443/tcp
+sudo ufw reload
+```
+
+3️⃣ Create System Configuration
+```
+sudo bash -c 'cat > /etc/sysctl.d/99-popcache.conf << EOL
+net.ipv4.ip_local_port_range = 1024 65535
+net.core.somaxconn = 65535
+net.ipv4.tcp_low_latency = 1
+net.ipv4.tcp_fastopen = 3
+net.ipv4.tcp_slow_start_after_idle = 0
+net.ipv4.tcp_window_scaling = 1
+net.ipv4.tcp_wmem = 4096 65536 16777216
+net.ipv4.tcp_rmem = 4096 87380 16777216
+net.core.wmem_max = 16777216
+net.core.rmem_max = 16777216
+EOL'
+sudo sysctl -p /etc/sysctl.d/99-popcache.conf
+```
+```
+sudo bash -c 'cat > /etc/security/limits.d/popcache.conf << EOL
+*    hard nofile 65535
+*    soft nofile 65535
+EOL'
+```
+Now close ur VPS or WSL or Ubuntu Then Open again ur VPS or WSL
+
+4️⃣ Make Directory (create folder to be used for download cache)
+```
+sudo mkdir -p /opt/popcache
+sudo mkdir -p /opt/popcache/logs
+```
+```
+cd /opt/popcache
 ```
 
 For VPS Only
 ```
 apt install screen -y
 ```
-
-2️⃣ Download Some Files
 ```
-curl -L -o pop "https://dl.pipecdn.app/v0.2.8/pop"
+screen -S pipetestnet
 ```
-```
-chmod +x pop
-```
-
-For VPS Only
-```
-screen -S pipe
-```
-
-3️⃣ Make Directory (create folder to be used for download cache)
-```
-mkdir download_cache
-```
-
-4️⃣ Signup Your Account
-```
-./pop --signup-by-referral-route d2be19523a45a241
-```
-
-```
-# Generate Your Referral
-./pop --gen-referral-route
-```
-
-5️⃣ Start Node
-```
-./pop --ram 8 --max-disk 500 --cache-dir /data --pubKey <KEY>
-```
-
-OR
-```
-./pop \
-
---ram 8 \              # RAM in GB
-
---max-disk 500 \       # Max disk usage in GB  
-
---cache-dir /data \    # Cache location
-
---pubKey <KEY>         # Solana public key (Address)
-```
-
-Note: Put your `ram` , `disk` & `pubkey` with your actual Information.Retrieve the public key from your Solana wallet (e.g., Phantom, Backpack) & Replace in `<KEY>` by Solana Address
-
-![6165852026936868478](https://github.com/user-attachments/assets/6ceac486-a639-48ed-aa81-cccfbe02d6da)
-
-If Your Node showing this Above Error then Put Below Command (Must Put `ram` , `disk` & `pubkey` value)
-```
-sudo ./pop --ram 8 --max-disk 500 --cache-dir /data --pubKey <KEY>
-```
-
-For VPS Only
-- PRESS CTRL+A+D (to run ur miner continuously)
+- PRESS CTRL+A+D (to run ur node continuously)
 - To check ur Node Again
 ```
-screen -r pipe
+screen -r pipetestnet
+```
+
+5️⃣ Download Pipe Binaries
+1. Visit: [Download](https://download.pipe.network/) file (use invite code from email)
+2. Once Downloaded use termius SFTP feature to drag and drop the downloaded file in `/opt/popcache` you created in step 4
+
+```
+sudo tar -xzf pop-v0.3.0-linux-*.tar.gz
+```
+```
+chmod +x /opt/popcache/pop
+```
+
+6️⃣ Setup Config File
+```
+nano config.json
+```
+```
+{
+  "pop_name": "your-pop-name",
+  "pop_location": "Your Location, Country",
+  "invite_code": "Enter your Invite Code",
+  "server": {
+    "host": "0.0.0.0",
+    "port": 443,
+    "http_port": 80,
+    "workers": 0
+  },
+  "cache_config": {
+    "memory_cache_size_mb": 4096,
+    "disk_cache_path": "./cache",
+    "disk_cache_size_gb": 100,
+    "default_ttl_seconds": 86400,
+    "respect_origin_headers": true,
+    "max_cacheable_size_mb": 1024
+  },
+  "api_endpoints": {
+    "base_url": "https://dataplane.pipenetwork.com"
+  },
+  "identity_config": {
+    "node_name": "your-node-name",
+    "name": "Your Name",
+    "email": "your.email@example.com",
+    "website": "https://your-website.com",
+    "discord": "your_discord_username",
+    "telegram": "your_telegram_handle",
+    "solana_pubkey": "YOUR_SOLANA_WALLET_ADDRESS_FOR_REWARDS"
+  }
+}
+```
+
+- `pop-location`: location of VPS --> Command to Check --> `realpath --relative-to /usr/share/zoneinfo /etc/localtime`
+- `website`: Anything you prefer (can use github profile)
+
+
+
+7️⃣ Creating a Systemd Service File
+```
+sudo bash -c 'cat > /etc/systemd/system/popcache.service << EOL
+[Unit]
+Description=POP Cache Node
+After=network.target
+
+[Service]
+Type=simple
+User=root
+Group=root
+WorkingDirectory=/opt/popcache
+ExecStart=/opt/popcache/pop
+Restart=always
+RestartSec=5
+LimitNOFILE=65535
+StandardOutput=append:/opt/popcache/logs/stdout.log
+StandardError=append:/opt/popcache/logs/stderr.log
+Environment=POP_CONFIG_PATH=/opt/popcache/config.json
+
+[Install]
+WantedBy=multi-user.target
+EOL'
+```
+
+8️⃣ Run Node
+```
+sudo systemctl daemon-reload
+```
+```
+sudo systemctl enable popcache
+```
+```
+sudo systemctl start popcache
 ```
 
 # Open Another Window for WSL or VPS
 
-## Save the file
+## Monitor your Node Status & Logs
 ```
-nano ~/node_info.json
-```
-
-## Monitor your Node Status & Points
-```
-./pop --status
+sudo systemctl status popcache
 ```
 ```
-./pop --points
+sudo journalctl -u popcache
 ```
 
 ## Check Points & Status from Dashboard - https://dashboard.pipenetwork.com/node-lookup
@@ -97,27 +200,17 @@ nano ~/node_info.json
 
 #1 Open WSL and Put this Command 
 ```
-sudo ./pop --ram 8 --max-disk 500 --cache-dir /data --pubKey <KEY>
-```
-
-Note: Replace your `ram` , `disk` & `pubkey` with your actual Information.Retrieve the public key from your Solana wallet (e.g., Phantom, Backpack)
-
-## Upgrade Your Node in v0.2.8
-
-1️⃣ Upgrade (Download Latest Version)
-```
-curl -L -o pop "https://dl.pipecdn.app/v0.2.8/pop"
+cd /opt/popcache
 ```
 ```
-chmod +x pop
+sudo systemctl daemon-reload
 ```
-
-2️⃣ Start Node
 ```
-sudo ./pop --ram 8 --max-disk 500 --cache-dir /data --pubKey <KEY>
+sudo systemctl enable popcache
 ```
-
-Note: Put your `ram` , `disk` & `pubkey` with your actual Information.Retrieve the public key from your Solana wallet (e.g., Phantom, Backpack) & Replace in `<KEY>` by Solana Address
+```
+sudo systemctl start popcache
+```
 
 ## Need to Free Your 8003 Port
 
