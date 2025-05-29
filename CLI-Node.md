@@ -204,6 +204,23 @@ sudo systemctl status popcache
 sudo journalctl -u popcache
 ```
 
+# Get Your Pop ID
+```
+curl -sk https://localhost/metrics | jq . && curl -sk https://localhost/state | jq . && curl -sk https://localhost/health | jq .
+```
+
+![448379008-46e9cac6-66e8-4e37-83e1-f7dce5e9bb2f](https://github.com/user-attachments/assets/ed4f84c8-d8ac-4569-9dd5-2753df9e1688)
+
+
+# Check Score & Status from Dashboard
+
+https://dashboard.testnet.pipe.network/node/pop-11586
+
+Put ur `pop id` at the end of the link to get info about your node (like pop-11586 just replace number only)
+
+![Screenshot 2025-05-29 181443](https://github.com/user-attachments/assets/9c229374-4e08-4420-a9a0-e06695548dfd)
+
+
 
 ## 🔶For Next Day Run This Command
 
